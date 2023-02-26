@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+import Drafts from '../components/Drafts';
+import handleSubmit from '../handles/HandleSubmit';
+import { useRef } from 'react';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import './editor.css';
 
@@ -21,6 +24,7 @@ class NewFile extends Component {
       contentState,
     }
   }
+  
 
   onContentStateChange = (contentState) => {
     this.setState({
@@ -39,11 +43,18 @@ class NewFile extends Component {
             locale: 'ko',
           }}
           onContentStateChange={this.onContentStateChange}
+          // create a Blob from the JSON-string
+          value={JSON.stringify(contentState, null, 4)}
+          //var blob = new Blob([value], {type: "application/json"})
         />
-        {/* <textarea
+        <textarea
           disabled
           value={JSON.stringify(contentState, null, 4)}
-        /> */}
+        />
+        <div className='button-wrapper'>
+          <button className='button-save'>Save</button>
+          <button className='button-save'>Submit</button>
+        </div>
       </div>
     );
   }
